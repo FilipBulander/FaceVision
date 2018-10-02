@@ -23,20 +23,20 @@ class ImageViewController: UIViewController {
     }
     
     @IBAction func process(_ sender: UIButton) {
-        var orientation:Int32 = 0
+        var orientation:CGImagePropertyOrientation = .down
         
         // detect image orientation, we need it to be accurate for the face detection to work
         switch image.imageOrientation {
         case .up:
-            orientation = 1
+            orientation = .up
         case .right:
-            orientation = 6
+            orientation = .right
         case .down:
-            orientation = 3
+            orientation = .down
         case .left:
-            orientation = 8
+            orientation = .left
         default:
-            orientation = 1
+            orientation = .down
         }
         
         // vision
@@ -87,7 +87,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.faceContour {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -104,7 +104,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.outerLips {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -122,7 +122,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.innerLips {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -140,7 +140,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.leftEye {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -158,7 +158,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.rightEye {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -176,7 +176,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.leftPupil {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -194,7 +194,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.rightPupil {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -212,7 +212,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.leftEyebrow {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -229,7 +229,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.rightEyebrow {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -246,7 +246,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.nose {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -264,7 +264,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.noseCrest {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
@@ -281,7 +281,7 @@ class ImageViewController: UIViewController {
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.medianLine {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
-                let point = landmark.point(at: i)
+                let point = landmark.normalizedPoints[i]
                 if i == 0 {
                     context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
                 } else {
